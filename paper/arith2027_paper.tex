@@ -1,0 +1,308 @@
+%% ARITH 2027 Submission Scaffold
+%% =================================
+%% IEEEtran Conference class, two-column.
+%% Status: v0.1 SCAFFOLD, 2026-06-01.
+%% This file is the reviewer-facing build target. Anonymised per
+%% arith2027_anonymisation_checklist.md. At camera-ready, replace
+%% the \author{} block, restore \thanks{}, and re-enable the
+%% acknowledgements section.
+
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+%% ASCII-only headers per goldenfloat-ladder skill rules.
+%% phi is rendered as \varphi in math mode.
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{A Phi-Derived Static-Split Floating-Point Family\\
+       from GF4 to GF256 with a Lucas-Exact Integer Identity}
+
+%% --- ANONYMISED AUTHOR BLOCK FOR DOUBLE-BLIND REVIEW ---
+\author{
+\IEEEauthorblockN{Anonymous Submission}
+\IEEEauthorblockA{ARITH 2027 --- Double-Blind Review}
+}
+%% --- END ANONYMISED BLOCK ---
+%%
+%% CAMERA-READY (DO NOT UNCOMMENT FOR REVIEWER PDF):
+%% \author{
+%% \IEEEauthorblockN{Dmitrii Vasiliev}
+%% \IEEEauthorblockA{\textit{Independent Researcher} \\
+%% Ko Samui, Thailand \\
+%% admin@t27.ai \\
+%% ORCID: 0009-0008-4294-6159}
+%% }
+
+\maketitle
+
+\begin{abstract}
+We describe GoldenFloat (GF), a family of floating-point formats whose
+exponent:mantissa split is generated, for each total width $N$, by a
+single closed rule $e = \mathrm{round}((N-1)/\varphi^2)$ with mantissa
+$m = N-1-e$, where $\varphi = (1+\sqrt{5})/2$. The rule reproduces the
+realised exponent widths of nine GF formats (GF4 through GF256) exactly
+[Verified] and extends consistently to GF128, GF512, and GF1024. We
+verify a classical integer identity, $\varphi^{2n} + \varphi^{-2n} =
+L_{2n}$ (Lucas numbers), symbolically for $n = 1\ldots 256$ and
+numerically at 500 decimal places, with classical attribution to Lucas
+(1878) and the Binet formula. We report one hardware artefact: a GF16
+codec on Artix-7 FPGA passing a 35-of-35 testbench at 323 MHz, and a
+pre-registered matched-substrate head-to-head experiment against
+posit-16, takum-16, and binary16 on the same board. We are explicit
+about non-claims: $\varphi$ is not a uniqueness claim, no GF rung is
+claimed to outperform posit, takum, MX, or LNS at matched substrate, and
+no silicon has been validated. A falsification ledger records the open
+questions and the experiments that would settle them.
+\end{abstract}
+
+\begin{IEEEkeywords}
+computer arithmetic, floating-point formats, golden ratio, Lucas
+numbers, FPGA, double-blind submission
+\end{IEEEkeywords}
+
+%% ===================== SECTION 1 =====================
+\section{Introduction}
+\label{sec:intro}
+
+%% TODO: Fill from arith2027_paper_outline.md Section 1 (~525 words, 0.75 pg).
+%% Three subsections:
+%%   1. Motivation paragraph (posit, takum, MX, LNS as prior art).
+%%   2. The three-word contribution: rule, identity, measurement.
+%%   3. What this paper does not claim (four condensed items).
+
+\subsection{Motivation}
+% PLACEHOLDER: posit (Gustafson-Yonemoto 2017), takum (Hunhold ARITH
+% 2025), OCP MX (Rouhani et al. 2023), LNS. Prior art and allies.
+
+\subsection{Contribution}
+% PLACEHOLDER: rule, identity, measurement.
+
+\subsection{What This Paper Does Not Claim}
+% PLACEHOLDER: (1) phi not unique; (2) no per-rung superiority;
+% (3) no silicon validation; (4) breadth-as-moat is [Open-conjecture].
+
+%% ===================== SECTION 2 =====================
+\section{The Ladder Rule and Look-Elsewhere Correction}
+\label{sec:ladder}
+
+%% TODO: Fill from preprint Sections 2.1-2.4 (~1050 words, 1.5 pg).
+%% Preserve the "negative result first" structure of the look-elsewhere
+%% correction --- it is the strongest reviewer-signal subsection.
+
+\subsection{Definition}
+Let $N$ be the total format width in bits, including one sign bit. The
+GoldenFloat split allocates
+\begin{equation}
+\label{eq:rule}
+e = \mathrm{round}\!\left(\frac{N-1}{\varphi^2}\right), \qquad m = N - 1 - e,
+\end{equation}
+where $\varphi = (1+\sqrt{5})/2 = 1.61803\ldots$ and $\varphi^2 =
+\varphi + 1 = 2.61803\ldots$, so $1/\varphi^2 = 0.38197\ldots$ The rule
+is \emph{static}: $e$ depends only on $N$, never on the value being
+represented.
+
+% PLACEHOLDER: Table 1 with 12 formats (N, e, m, raw, ratio).
+
+\subsection{Retraction of the ``2-to-256'' Wording}
+% PLACEHOLDER: GF2 and GF3 are [Retracted]; ladder defined GF4 to GF256.
+
+\subsection{Look-Elsewhere Correction for the $\varphi^{-2}$ Coincidence}
+% PLACEHOLDER: 83-of-80000 rational search, family-wise probability
+% approx 7.1e-3, Bonferroni saturates at 1, Bayes factor 964 with the
+% structural caveat, narrowing from 392 to 47 ratios with 12 formats.
+
+\subsection{Rounding Mode}
+% PLACEHOLDER: round-half-to-even; immaterial for all nine [Verified]
+% widths because the raw value is never a half-integer.
+
+%% ===================== SECTION 3 =====================
+\section{The GRE Multiplier-Free Anchor}
+\label{sec:gre}
+
+%% TODO: Fill from preprint Section 3 (~525 words, 0.75 pg).
+%% Daubechies et al. IEEE TIT 2010 + the narrow defensible link.
+
+\subsection{The Engineering Property}
+% PLACEHOLDER: phi^2 = phi + 1 removes the constant-multiplier component
+% in the beta-encoder of Daubechies, Gunturk, Wang, Yilmaz.
+
+\subsection{What the GRE Result Does and Does Not Establish}
+% PLACEHOLDER: (a) no claim base is forced; (b) no point-robustness at
+% beta = phi (Daubechies Theorem 8 caveat); (c) the narrow defensible
+% link to the Lucas identity of Section 4.
+
+%% ===================== SECTION 4 =====================
+\section{The Lucas-Exact Integer Identity}
+\label{sec:lucas}
+
+%% TODO: Fill from preprint Section 4 (~525 words, 0.75 pg).
+%% Classical Lucas L_{2n} attribution + symbolic + 500-digit numerical
+%% verification + application to GF bias derivation.
+
+\subsection{Statement and Classical Provenance}
+For all integers $n \geq 1$,
+\begin{equation}
+\label{eq:lucas}
+\varphi^{2n} + \varphi^{-2n} = L_{2n},
+\end{equation}
+where $L_k$ is the $k$-th Lucas number ($L_0 = 2$, $L_1 = 1$, $L_k =
+L_{k-1} + L_{k-2}$). This is a classical corollary of the Binet
+formula $L_k = \varphi^k + (-\varphi)^{-k}$. The identity is
+attributed to Lucas (1878) and Binet; the present authors claim no
+originality for the identity itself.
+
+\subsection{Numerical Verification}
+% PLACEHOLDER: symbolic verification for n = 1..256; 500-digit mpmath
+% numerical check; reproducibility script in supplementary materials.
+
+\subsection{Application to GoldenFloat Bias Derivation}
+% PLACEHOLDER: integer-backed accumulation idea; the engineering
+% artefact does not yet exist [Open].
+
+%% ===================== SECTION 5 =====================
+\section{Hardware Status and the Matched-Substrate Experiment}
+\label{sec:hardware}
+
+%% TODO: Fill from preprint Section 5 + arith2027_matched_substrate_experiment.md.
+%% This is the section that materially extends the preprint and makes
+%% the ARITH paper viable.
+
+\subsection{Per-Width Status}
+% PLACEHOLDER: compressed Table 2; seven widths generated end-to-end
+% from one .t27 spec into C + Verilog + JSON conformance vectors
+% [Verified].
+
+\subsection{The GF16 Result}
+We report a GF16 codec implementation on Artix-7 FPGA passing a 35-of-35
+testbench at 323 MHz after a one-line rounding fix [Verified]. Synthesis
+was performed in Xilinx Vivado with default Performance\_Explore
+implementation strategy. % PLACEHOLDER: detailed numbers + reference to
+% supplementary RTL.
+
+\subsection{The Substrate-Confound Problem}
+% PLACEHOLDER: why software BPB measurements alone are insufficient.
+
+\subsection{Matched-Substrate Head-to-Head Experiment}
+\label{subsec:matched-substrate}
+We pre-register a matched-substrate head-to-head experiment comparing
+GF16 against posit-16 (PERCIVAL reference), takum-16 (open-source
+reference), and binary16 (IEEE 754) on the same Artix-7 board.
+% PLACEHOLDER: full protocol from arith2027_matched_substrate_experiment.md.
+% Reports the four metrics across three workloads. All four outcomes
+% (advantage, coexistence, disadvantage, insufficient-evidence) are
+% acceptable; the experiment is designed to be falsifiable.
+
+\subsection{Implications}
+% PLACEHOLDER: how the matched-substrate result (or its pre-registration
+% alone) resolves the substrate-confound; status update on the
+% breadth-as-moat hypothesis.
+
+%% ===================== SECTION 6 =====================
+\section{Prior Art and Positioning}
+\label{sec:prior}
+
+%% TODO: Fill from preprint Section 6 (~350 words, 0.5 pg).
+
+%% PLACEHOLDER: posit (Gustafson-Yonemoto 2017), takum (Hunhold 2024,
+%% ARITH 2025) as closest live alternative, OCP MX (Rouhani et al.
+%% 2023), LNS. Explicit: no accuracy or superiority claim.
+
+%% ===================== SECTION 7 =====================
+\section{Discussion: Breadth as the Moat}
+\label{sec:moat}
+
+%% TODO: Fill from preprint discussion + goldenfloat-ladder skill rules
+%% (~350 words, 0.5 pg).
+
+%% PLACEHOLDER: honest moat framing --- breadth (one rule, GF4 to GF256)
+%% and toolchain coherence (one .t27 spec to C + Verilog + JSON across
+%% seven widths). Not per-rung superiority. F1/F2/F3 falsification
+%% protocol. Status: [Open-conjecture].
+
+%% ===================== SECTION 8 =====================
+\section{Conclusions and Falsification Path}
+\label{sec:conc}
+
+%% TODO: Fill from preprint conclusion (~175 words, 0.25 pg).
+
+%% PLACEHOLDER: restate rule, identity, measurement contributions;
+%% restate non-claims; pointer to FL-002 ledger in supplementary
+%% materials; one sentence on next steps.
+
+%% ===================== ACKNOWLEDGEMENTS =====================
+%% REVIEWER-FACING: removed entirely for double-blind.
+%%
+%% CAMERA-READY:
+%% \section*{Acknowledgements}
+%% The author thanks % TODO --- check independence rules before listing.
+
+%% ===================== REFERENCES =====================
+\begin{thebibliography}{99}
+
+\bibitem{daubechies2010gre}
+I. Daubechies, C. S. G\"unt\"urk, Y. Wang, and \"O. Yilmaz, ``The Golden
+Ratio Encoder,'' \emph{IEEE Transactions on Information Theory},
+vol.~56, no.~10, pp.~5097--5110, Oct.\ 2010.
+
+\bibitem{gustafson2017posit}
+J.~L. Gustafson and I.~Yonemoto, ``Beating Floating Point at its Own
+Game: Posit Arithmetic,'' \emph{Supercomputing Frontiers and
+Innovations}, vol.~4, no.~2, 2017.
+
+\bibitem{hunhold2024takum}
+L.~Hunhold, ``Takum Arithmetic: A Tapered Floating-Point Format,''
+arXiv:2412.20273, 2024.
+
+\bibitem{hunhold2025fft}
+L.~Hunhold and J.~L. Gustafson, ``Numerical analysis of FFT using takum
+arithmetic,'' arXiv:2504.21197, 2025.
+
+\bibitem{hunhold2025arnoldi}
+L.~Hunhold and J.~L. Gustafson, ``An Arnoldi-style method for takum
+arithmetic,'' arXiv:2504.21130, 2025.
+
+\bibitem{rouhani2023mx}
+B.~Rouhani \emph{et al.}, ``Microscaling Data Formats for Deep
+Learning,'' OCP MX White Paper, 2023.
+
+\bibitem{mallasen2022percival}
+R.~Murillo, A.~A. Del Barrio, G.~Botella, M.~S. Kim, H.~Kim, and N.~Bagherzadeh,
+``PERCIVAL: Open-Source Posit RISC-V Core with Quire Capability,''
+\emph{IEEE Transactions on Emerging Topics in Computing}, 2022.
+
+\bibitem{lucas1878}
+E.~Lucas, ``Th\'eorie des fonctions num\'eriques simplement
+p\'eriodiques,'' \emph{American Journal of Mathematics}, vol.~1, 1878.
+
+\bibitem{ieee754-2019}
+IEEE, ``IEEE Standard for Floating-Point Arithmetic,'' IEEE Std
+754-2019.
+
+\bibitem{ahlbach-usatine-pippenger}
+C.~Ahlbach, J.~Usatine, and N.~Pippenger, ``Efficient Algorithms for
+Zeckendorf Arithmetic.''
+
+\bibitem{dedinechin-flopoco}
+F.~de Dinechin and B.~Pasca, ``Designing Custom Arithmetic Data Paths
+with FloPoCo,'' \emph{IEEE Design \& Test of Computers}, 2011.
+
+%% PLACEHOLDER: add 4-9 more references as content fills.
+%% Drop self-references; drop CLARA / DARPA / IGLA / pellis-vasilev-letter
+%% references entirely per anonymisation checklist.
+
+\end{thebibliography}
+
+\end{document}
