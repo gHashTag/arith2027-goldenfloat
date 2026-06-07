@@ -54,7 +54,10 @@ exponent:mantissa split is generated, for each total width $N$, by a
 single closed rule $e = \mathrm{round}((N-1)/\varphi^2)$ with mantissa
 $m = N-1-e$, where $\varphi = (1+\sqrt{5})/2$. The rule reproduces the
 realised exponent widths of nine GF formats (GF4 through GF256) exactly
-[Verified] and extends consistently to GF128, GF512, and GF1024. We
+[Verified] and extends consistently to eight further rule-derived rungs
+GF6, GF10, GF14, GF48, GF96, GF128 [Conj] and GF512, GF1024
+[Conj, rule extrapolation; bias $2^{194}-1$, $2^{390}-1$ exceeds the
+\texttt{u128} ROM record field and is tracked symbolically]. We
 verify a classical integer identity, $\varphi^{2n} + \varphi^{-2n} =
 L_{2n}$ (Lucas numbers), symbolically for $n = 1\ldots 256$ and
 numerically at 500 decimal places, with classical attribution to Lucas
@@ -114,7 +117,13 @@ where $\varphi = (1+\sqrt{5})/2 = 1.61803\ldots$ and $\varphi^2 =
 is \emph{static}: $e$ depends only on $N$, never on the value being
 represented.
 
-% PLACEHOLDER: Table 1 with 12 formats (N, e, m, raw, ratio).
+% PLACEHOLDER: Table 1 with 17 formats (N, e, m, raw, ratio).
+%   Top block (9 realised silicon/RTL): GF4, GF8, GF12, GF16, GF20,
+%       GF24, GF32, GF64, GF256.
+%   Middle block (6 rule-derived, no returned silicon): GF6, GF10,
+%       GF14, GF48, GF96, GF128.
+%   Bottom block (2 rule extensions; bias > u128, symbolic):
+%       GF512, GF1024.
 
 \subsection{Retraction of the ``2-to-256'' Wording}
 % PLACEHOLDER: GF2 and GF3 are [Retracted]; ladder defined GF4 to GF256.
@@ -123,6 +132,8 @@ represented.
 % PLACEHOLDER: 83-of-80000 rational search, family-wise probability
 % approx 7.1e-3, Bonferroni saturates at 1, Bayes factor 964 with the
 % structural caveat, narrowing from 392 to 47 ratios with 12 formats.
+% NOTE: 17-format narrowing recomputation is OPEN; do not cite a
+%       17-format figure until claim-audit-lab CASE-09 is closed.
 
 \subsection{Rounding Mode}
 % PLACEHOLDER: round-half-to-even; immaterial for all nine [Verified]

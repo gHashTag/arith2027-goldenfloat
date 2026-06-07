@@ -45,7 +45,7 @@ Single paragraph, IEEE conference style. Three-word contribution structure prese
 
 **Draft:**
 
-> We describe GoldenFloat (GF), a family of floating-point formats whose exponent:mantissa split is generated, for each total width N, by a single closed rule e = round((N-1)/phi^2) with mantissa m = N-1-e, where phi = (1+sqrt(5))/2. The rule reproduces the realised exponent widths of nine GF formats (GF4 through GF256) exactly and extends consistently to GF128, GF512, and GF1024. We verify a classical integer identity, phi^(2n) + phi^(-2n) = L_(2n) (Lucas numbers), symbolically for n = 1..256 and numerically at 500 decimal places. We report one hardware artefact: a GF16 codec on Artix-7 FPGA passing a 35-of-35 testbench at 323 MHz, and report a matched-substrate head-to-head experiment against posit-16, takum-16, and binary16 on the same board. We are explicit about non-claims: phi is not a uniqueness claim, no GF rung is claimed to outperform posit, takum, MX, or LNS at matched substrate, and no silicon has been validated.
+> We describe GoldenFloat (GF), a family of floating-point formats whose exponent:mantissa split is generated, for each total width N, by a single closed rule e = round((N-1)/phi^2) with mantissa m = N-1-e, where phi = (1+sqrt(5))/2. The rule reproduces the realised exponent widths of nine GF formats (GF4 through GF256) exactly and extends consistently to eight further rule-derived rungs: GF6, GF10, GF14, GF48, GF96, GF128 (no returned silicon) and GF512, GF1024 (bias 2^194-1, 2^390-1; exceeds u128 ROM record field, tracked symbolically). We verify a classical integer identity, phi^(2n) + phi^(-2n) = L_(2n) (Lucas numbers), symbolically for n = 1..256 and numerically at 500 decimal places. We report one hardware artefact: a GF16 codec on Artix-7 FPGA passing a 35-of-35 testbench at 323 MHz, and report a matched-substrate head-to-head experiment against posit-16, takum-16, and binary16 on the same board. We are explicit about non-claims: phi is not a uniqueness claim, no GF rung is claimed to outperform posit, takum, MX, or LNS at matched substrate, and no silicon has been validated.
 
 **Keywords:** computer arithmetic, floating-point formats, golden ratio, Lucas numbers, FPGA, double-blind submission
 
@@ -61,7 +61,7 @@ Compress the current §1 intro: numerical formats have diversified beyond IEEE 7
 
 State the contribution: *a rule, an identity, and a measurement*.
 
-- **Rule.** e = round((N-1)/phi^2), m = N-1-e. Reproduces 9 realised widths [Verified], extends to GF128/512/1024.
+- **Rule.** e = round((N-1)/phi^2), m = N-1-e. Reproduces 9 realised widths [Verified]; extends to 8 further rule-derived rungs GF6, GF10, GF14, GF48, GF96, GF128 [Conj] and GF512, GF1024 [Conj, bias > u128, symbolic].
 - **Identity.** phi^(2n) + phi^(-2n) = L_(2n), Lucas (1878) attribution explicit. Motivates integer-backed accumulation. We do not claim authorship of the identity.
 - **Measurement.** GF16 codec at 323 MHz on Artix-7 [Verified] plus a matched-substrate head-to-head (Section 5).
 
@@ -96,7 +96,7 @@ Direct lift of preprint §2.2. Signals epistemic discipline to reviewers.
 
 ### §2.3 Look-elsewhere correction (~500 words)
 
-Full preprint §2.3 — *negative result first*, the 83-of-80000 rational search, family-wise probability ≈ 7.1×10^-3, Bonferroni saturation at 1, Bayes factor 964 with the structural caveat, narrowing from 392 to 47 ratios when extending to 12 formats. **This is the strongest reviewer-signal section** — preserve in full.
+Full preprint §2.3 — *negative result first*, the 83-of-80000 rational search, family-wise probability ≈ 7.1×10^-3, Bonferroni saturation at 1, Bayes factor 964 with the structural caveat, narrowing from 392 to 47 ratios when extending to 12 formats. **This is the strongest reviewer-signal section** — preserve in full. NOTE: 17-format narrowing is OPEN (claim-audit-lab CASE-09); do not cite a 17-format figure until that case closes.
 
 ### §2.4 Rounding mode (~100 words)
 
@@ -181,7 +181,7 @@ Compressed from preprint §6:
 - **Takum** (Hunhold ARITH 2025) — tapered rule uniform across widths, **closest live alternative** with peer-reviewed multi-width hardware.
 - **OCP MX** (Rouhani et al. 2023) — block-scaled 4/6/8-bit microscaling.
 - **LNS** — logarithmic number systems, exact multiplication, approximate addition.
-- **GoldenFloat positioning** — different point in design space: static split, single closed rule keyed to phi, spans a full ladder GF4 to GF256.
+- **GoldenFloat positioning** — different point in design space: static split, single closed rule keyed to phi, spans a 17-rung ladder GF4 to GF1024 (9 with returned silicon/RTL, 6 rule-derived without silicon, 2 symbolic-bias extensions).
 
 Explicit: no accuracy or superiority claim over any of them. Treat as precedents and allies.
 
@@ -191,7 +191,7 @@ Explicit: no accuracy or superiority claim over any of them. Treat as precedents
 
 Honest moat framing per `goldenfloat-ladder` skill:
 
-- **What the moat is:** breadth (one rule covers GF4 to GF256) and toolchain coherence (one .t27 spec → C / Verilog / JSON conformance vectors from a single source of truth, seven widths end-to-end).
+- **What the moat is:** breadth (one rule covers GF4 through GF1024, 17 rungs total) and toolchain coherence (one .t27 spec → C / Verilog / JSON conformance vectors from a single source of truth, seven widths end-to-end).
 - **What the moat is not:** per-rung superiority; phi being unique among bases; per-rung accuracy claim.
 - **Falsification path:** F1 (arithmetic correctness — already [Verified] 9/9), F2 (matched-substrate per-rung — §5.4 protocol), F3 (multi-rung composition — open).
 - **Status:** **[Open-conjecture]** with the F1/F2/F3 protocol.
