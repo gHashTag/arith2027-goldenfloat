@@ -5,7 +5,7 @@ Working repository for the **ARITH 2027** (IEEE Symposium on Computer Arithmetic
 **Target venue:** ARITH 2027 — outside North America, summer 2027
 **Format:** 8 pages two-column IEEE CS Conference, double-blind review
 **Expected paper deadline:** ~29 Jan - 5 Feb 2027 (pattern-extrapolated)
-**Status:** scaffold and pre-registered protocol, v0.1
+**Status:** scaffold and pre-registered protocol, v0.2 (17-rung ladder aligned; arXiv:2606.05017 anchored)
 
 ---
 
@@ -133,6 +133,8 @@ Source files in this repository are released under MIT (planned, to be confirmed
 | Anonymisation checklist v0.1 | 01 Jun 2026 | Done |
 | Matched-substrate protocol v0.1 | 01 Jun 2026 | Done |
 | LaTeX scaffold v0.1 | 01 Jun 2026 | Done |
+| Scaffold v0.2 (17-rung ladder GF4..GF1024) | 04 Jun 2026 | Done |
+| arXiv:2606.05017 anchor sync | 05 Jun 2026 | Done |
 | Stand up reference RTL builds | 30 Jul 2026 | Pending |
 | Testbench harness | 15 Aug 2026 | Pending |
 | First synthesis runs | 30 Sep 2026 | Pending |
