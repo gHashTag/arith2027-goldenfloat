@@ -2,7 +2,7 @@
 
 **Document status:** WORKING PLAN, v0.1, 2026-06-01
 **Owner:** Dmitrii Vasiliev (admin@t27.ai)
-**Source manuscript:** /home/user/workspace/project_canon/gf_preprint-2.pdf (32 pp, v1.7, arXiv preprint, English+ASCII)
+**Source manuscript:** arXiv:2606.05017 (cs.AR, live 2026-06-03; v1.9 = gf_preprint_v19.pdf, 19 pp PDF / 32 pp source, English+ASCII) -- https://arxiv.org/abs/2606.05017
 **Companion skill:** goldenfloat-ladder (claim-status discipline, FL-002 ledger, breadth-as-moat framing)
 
 ---
@@ -218,7 +218,8 @@ Items in the current preprint that **must be redacted or rephrased** before subm
 
 ### 7.3 Self-citations
 - Any cite of an author's own prior work → cite it as "[Author1, 2026]" or "Anonymous, in preparation".
-- The arXiv preprint version of this paper → cite as "an extended technical note by the authors, currently in preparation" without the arXiv ID.
+- The parent GoldenFloat preprint → cite as arXiv:2606.05017 (cs.AR, 2026-06-03) -- now live.
+- The ARITH-paper-specific arXiv version (the compressed 8-page version) → cite as "an extended technical note by the authors, currently in preparation" without an arXiv ID, until the ARITH paper itself is submitted.
 
 ### 7.4 Specific identifying claims to soften
 - "Independent researcher" framing → neutralise to passive voice where possible.
