@@ -1,6 +1,6 @@
 # ARITH 2027 Paper Outline — 8-page IEEE CS Conference
 
-**Status:** v0.1, 2026-06-01
+**Status:** v0.2, 2026-06-04 (17-rung ladder aligned; arXiv:2606.05017 anchored)
 **Target:** 8 pages two-column IEEE CS Conference format, double-blind
 **Source manuscript:** `gf_preprint-2.pdf` v1.7 (32 pp single-column research note)
 **Working title (anonymised):** "A Phi-Derived Static-Split Floating-Point Family from GF4 to GF256 with a Lucas-Exact Integer Identity"
@@ -262,4 +262,4 @@ Every section above must satisfy `goldenfloat-ladder` skill rules:
 
 ---
 
-**End of outline v0.1.**
+**End of outline v0.2.**
