@@ -39,7 +39,7 @@ The contribution is three-fold:
 
 1. **A rule** that reproduces nine realised widths (GF4 through GF256) exactly [Verified] and extends consistently to eight further rule-derived rungs: GF6, GF10, GF14, GF48, GF96, GF128 [Conj, no returned silicon] and GF512, GF1024 [Conj, bias > u128, symbolic only].
 2. **A classical integer identity** `phi^(2n) + phi^(-2n) = L_(2n)` (Lucas numbers), verified symbolically for n = 1..256 and numerically at 500 decimal places. Attribution to Lucas (1878) and Binet — not original to this work.
-3. **One hardware artefact** — a GF16 codec on Artix-7 FPGA passing a 35-of-35 testbench at 323 MHz — plus a pre-registered matched-substrate head-to-head experiment against posit-16, takum-16, and binary16 on the same board.
+3. **One hardware artefact** — a GF16 codec on Artix-7 FPGA passing a 35-of-35 testbench (the earlier 323 MHz timing figure was withdrawn after review) — plus a pre-registered matched-substrate head-to-head experiment against posit-16, takum-16, and binary16 on the same board.
 
 ---
 
@@ -85,7 +85,7 @@ pdflatex arith2027_paper.tex
 pdflatex arith2027_paper.tex
 ```
 
-The scaffold is currently a skeleton with `% PLACEHOLDER` comments marking each subsection. Content is filled in iteratively from `gf_preprint-2.pdf` (the 32-page research-note version on arXiv cs.AR) following the page budget in `paper/OUTLINE.md`.
+The scaffold is currently a skeleton with `% PLACEHOLDER` comments marking each subsection. Content is filled in iteratively from the live arXiv version ([arXiv:2606.05017](https://arxiv.org/abs/2606.05017) v3, 20 pages, cs.AR; the v4 erratum announces 7 Sep 2026) following the page budget in `paper/OUTLINE.md`.
 
 ---
 
